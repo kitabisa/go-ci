@@ -2,6 +2,12 @@ package ci
 
 import "testing"
 
+func skipIf[T Testing](f func() bool, t T) {
+	if f() {
+		t.SkipNow()
+	}
+}
+
 // SkipTestIfCI is a testing helper function that skips the execution of a test
 // if it is running within a CI/CD pipeline.
 //
@@ -19,47 +25,35 @@ import "testing"
 //		// do your test...
 //	}
 func SkipTestIfCI(t *testing.T) {
-	if IsCI() {
-		t.SkipNow()
-	}
+	skipIf(IsCI, t)
 }
 
 // SkipTestIfNotCI is a testing helper function that skips the execution of a
 // test if it is not running within a CI/CD pipeline.
 func SkipTestIfNotCI(t *testing.T) {
-	if IsNotCI() {
-		t.SkipNow()
-	}
+	skipIf(IsNotCI, t)
 }
 
 // SkipBenchmarkIfCI is a testing helper function that skips the execution of a
 // benchmark if it is running within a CI/CD pipeline.
 func SkipBenchmarkIfCI(b *testing.B) {
-	if IsCI() {
-		b.SkipNow()
-	}
+	skipIf(IsCI, b)
 }
 
 // SkipBenchmarkIfNotCI is a testing helper function that skips the execution of
 // a benchmark if it is not running within a CI/CD pipeline.
 func SkipBenchmarkIfNotCI(b *testing.B) {
-	if IsNotCI() {
-		b.SkipNow()
-	}
+	skipIf(IsNotCI, b)
 }
 
 // SkipFuzzIfCI is a testing helper function that skips the execution of a fuzz
 // test if it is running within a CI/CD pipeline.
 func SkipFuzzIfCI(f *testing.F) {
-	if IsCI() {
-		f.SkipNow()
-	}
+	skipIf(IsCI, f)
 }
 
 // SkipFuzzIfNotCI is a testing helper function that skips the execution of a
 // fuzz test if it is not running within a CI/CD pipeline.
 func SkipFuzzIfNotCI(f *testing.F) {
-	if IsNotCI() {
-		f.SkipNow()
-	}
+	skipIf(IsNotCI, f)
 }
