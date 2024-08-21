@@ -1,6 +1,6 @@
 module github.com/kitabisa/go-ci
 
-go 1.22.0
+go 1.21
 
 require github.com/stretchr/testify v1.8.4
 
