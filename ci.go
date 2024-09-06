@@ -24,7 +24,10 @@ func IsNotCI() bool {
 
 func isCICached() (isCI bool, found bool) {
 	// Check from cache
+	cache.m.Lock()
 	isCI, found = cache.val[cacheKey]
+	cache.m.Unlock()
+
 	return
 }
 
